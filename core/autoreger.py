@@ -26,20 +26,26 @@ class AutoReger:
                 consumables.append([creation_func() for _ in range(amount)])
 
         acc_len = len(consumables[0])
+        logger.debug(f'init consumables:{consumables}')
         consumables[1] = consumables[1][:acc_len]
+        logger.debug(f'acc_len after consumables:{consumables}')
 
         if with_id:
             consumables.insert(0, (list(range(1, acc_len + 1))))
+        logger.debug(f'with_id after consumables:{consumables}')
+
         if static_extra:
             for extra in static_extra:
                 consumables.append([extra] * acc_len)
 
         accounts = list(zip_longest(*consumables))
+        logger.debug(f'zip_longest after accounts:{accounts}')
 
         if not accounts or not accounts[0]:
             logger.warning("No accounts found :(")
             return
         else:
+            logger.debug(f'final cls(accounts):{cls(accounts)}')
             return cls(accounts)
 
     async def start(self, worker_func: callable, threads: int = 1, delay: tuple = (0, 0)):
