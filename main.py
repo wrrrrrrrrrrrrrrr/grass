@@ -16,7 +16,7 @@ from core.utils.accounts_db import AccountsDB
 from core.utils.exception import LoginException, NoProxiesException
 from core.utils.generate.person import Person
 from data.config import ACCOUNTS_FILE_PATH, PROXIES_FILE_PATH, REGISTER_ACCOUNT_ONLY, THREADS, REGISTER_DELAY, \
-    CLAIM_REWARDS_ONLY, CHECK_POINT_ONLY
+    CLAIM_REWARDS_ONLY, CHECK_POINT_ONLY, WSS_PROXIES_FILE_PATH
 
 
 def bot_info(name: str = ""):
@@ -102,7 +102,7 @@ async def main():
     await db.push_extra_proxies(proxies[len(accounts):])
 
     autoreger = AutoReger.get_accounts(
-        (ACCOUNTS_FILE_PATH, PROXIES_FILE_PATH),
+        (ACCOUNTS_FILE_PATH, PROXIES_FILE_PATH, WSS_PROXIES_FILE_PATH),
         with_id=True,
         static_extra=(db, )
     )

@@ -37,3 +37,4 @@ CAPTCHA_PARAMS = {
 
 ACCOUNTS_FILE_PATH = "data/accounts.txt"
 PROXIES_FILE_PATH = "data/proxies.txt"
+WSS_PROXIES_FILE_PATH = "data/wss_proxies.txt"
