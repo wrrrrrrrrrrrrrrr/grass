@@ -28,7 +28,7 @@ import datetime
 import ssl
 import json
 import time
-import websockets_proxy.Proxy
+from websockets_proxy import Proxy as wss_proxy
 from websockets_proxy import proxy_connect
 
 class Grass(GrassWs, GrassRest, FailureCounter):
@@ -111,7 +111,7 @@ class Grass(GrassWs, GrassRest, FailureCounter):
                 ssl_context.verify_mode = ssl.CERT_NONE
                 uri = "wss://proxy.wynd.network:4650/"
                 server_hostname = "proxy.wynd.network:4650"
-                proxy = websockets_proxy.Proxy.from_url(socks5_proxy)
+                proxy = wss_proxy.from_url(socks5_proxy)
 
                 async with proxy_connect(uri, proxy=proxy, ssl=ssl_context, server_hostname=server_hostname,
                                          extra_headers=custom_headers) as websocket:
