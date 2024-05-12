@@ -113,6 +113,9 @@ async def main():
     elif CLAIM_REWARDS_ONLY:
         msg = "__CLAIM__ MODE"
         threads = THREADS
+    elif CHECK_POINT_ONLY:
+        msg = "__CHECK_POINT__ MODE"
+        threads = THREADS
     else:
         msg = "__MINING__ MODE"
         threads = len(autoreger.accounts)
