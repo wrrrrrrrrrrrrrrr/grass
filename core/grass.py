@@ -163,7 +163,7 @@ class Grass(GrassWs, GrassRest, FailureCounter):
         while True:
             try:
                 await self.connection_handler()
-                await self.auth_to_extension(browser_id, user_id)
+                # await self.auth_to_extension(browser_id, user_id)
                 await self.connect_to_wss(self.wss_proxy, user_id)
 
                 # if self.proxy_score is None:
