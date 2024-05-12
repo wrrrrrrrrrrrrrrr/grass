@@ -24,7 +24,7 @@ from .utils.exception import WebsocketClosedException, LowProxyScoreException, P
     ProxyForbiddenException, ProxyError, WebsocketConnectionFailedError, FailureLimitReachedException, \
     NoProxiesException, ProxyBlockedException, SiteIsDownException, LoginException
 from better_proxy import Proxy
-
+import datetime
 
 class Grass(GrassWs, GrassRest, FailureCounter):
     # global_fail_counter = 0
@@ -136,6 +136,15 @@ class Grass(GrassWs, GrassRest, FailureCounter):
         await self.claim_rewards_handler()
 
         logger.info(f"{self.id} | Claimed all rewards.")
+
+    async def check_point(self):
+        await self.enter_account()
+        points = await self.get_points_handler()
+        logger.info(f"{self.id} | Total points: {points}")
+
+        with open(f"logs/accounts_point_{datetime.date.today().strftime('%Y-%m-%d')}.txt", "a", encoding="utf-8") as f:
+            f.write(f"{self.email}:{self.password}:{self.username} points:{points}\n")
+        logger.info(f"{self.id} | Check all rewards.")
 
     @retry(stop=stop_after_attempt(12),
            retry=(retry_if_exception_type(ConnectionError) | retry_if_not_exception_type(ProxyForbiddenException)),

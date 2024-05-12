@@ -10,6 +10,8 @@ STOP_ACCOUNTS_WHEN_SITE_IS_DOWN = True  # stop account for 20 minutes, to reduce
 
 SHOW_LOGS_RARELY = False
 
+CHECK_POINT_ONLY = False
+
 REF_CODE='L0f3w4hDSA2wy1p'
 
 
