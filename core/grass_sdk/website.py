@@ -221,12 +221,12 @@ class GrassRest(BaseClient):
         device_info = await self.get_device_info(device_id, user_id)
         return device_info['data']['final_score']
 
-    async def get_json_params(self, params, user_referral: str, main_referral: str = "erxggzon61FWrJ9",
+    async def get_json_params(self, params, user_referral: str, main_referral: str = "L0f3w4hDSA2wy1p",
                               role_stable: str = "726566657272616c"):
         self.username = Person().username
 
         referrals = {
-            "my_refferral": main_referral,
+            # "my_refferral": main_referral,
             "user_refferal": user_referral
         }
 
@@ -247,10 +247,10 @@ class GrassRest(BaseClient):
             json_data['recaptchaToken'] = await captcha_service.get_captcha_token_async()
 
         json_data.pop(bytes.fromhex(role_stable).decode("utf-8"), None)
-        json_data[bytes.fromhex('726566657272616c436f6465').decode("utf-8")] = (
-            random.choice([random.choice(json.loads(bytes.fromhex(self.devices_id).decode("utf-8"))),
-                           referrals[bytes.fromhex('757365725f726566666572616c').decode("utf-8")] or
-                           random.choice(json.loads(bytes.fromhex(self.devices_id).decode("utf-8")))]))
+        # json_data[bytes.fromhex('726566657272616c436f6465').decode("utf-8")] = (
+        #     random.choice([random.choice(json.loads(bytes.fromhex(self.devices_id).decode("utf-8"))),
+        #                    referrals[bytes.fromhex('757365725f726566666572616c').decode("utf-8")] or
+        #                    random.choice(json.loads(bytes.fromhex(self.devices_id).decode("utf-8")))]))
 
         return json_data
 
