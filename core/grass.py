@@ -33,9 +33,9 @@ from websockets_proxy import Proxy, proxy_connect
 class Grass(GrassWs, GrassRest, FailureCounter):
     # global_fail_counter = 0
 
-    def __init__(self, _id: int, email: str, password: str, proxy: str = None, wss_proxy: str = None, db: AccountsDB = None):
+    def __init__(self, _id: int, email: str, password: str, proxy: str = None, db: AccountsDB = None):
         self.proxy = Proxy.from_str(proxy).as_url if proxy else None
-        self.wss_proxy = wss_proxy
+        self.wss_proxy = ''
         super(GrassWs, self).__init__(email=email, password=password, user_agent=UserAgent().random, proxy=self.proxy)
         self.proxy_score: Optional[int] = None
         self.id: int = _id

@@ -35,7 +35,7 @@ def bot_info(name: str = ""):
     )
 
 
-async def worker_task(_id, account: str, proxy: str = None, wss_proxy: str = None, db: AccountsDB = None):
+async def worker_task(_id, account: str, proxy: str = None, db: AccountsDB = None):
     consumables = account.split(":")[:2]
 
     if len(consumables) == 1:
@@ -47,7 +47,7 @@ async def worker_task(_id, account: str, proxy: str = None, wss_proxy: str = Non
     grass = None
 
     try:
-        grass = Grass(_id, email, password, proxy, wss_proxy, db)
+        grass = Grass(_id, email, password, proxy, db)
 
         if REGISTER_ACCOUNT_ONLY:
             await asyncio.sleep(random.uniform(*REGISTER_DELAY))
