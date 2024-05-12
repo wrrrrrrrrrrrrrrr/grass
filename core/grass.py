@@ -212,8 +212,8 @@ class Grass(GrassWs, GrassRest, FailureCounter):
         points = await self.get_points_handler()
         logger.info(f"{self.id} | Total points: {points}")
 
-        with open(f"logs/accounts_point_{datetime.date.today().strftime('%Y-%m-%d')}.txt", "a", encoding="utf-8") as f:
-            f.write(f"{self.email}:{self.password}:{self.username} points:{points}\n")
+        with open(f"logs/accounts_point_{datetime.date.today().strftime('%Y-%m-%d')}.csv", "a", encoding="utf-8") as f:
+            f.write(f"{self.email}:{self.password}:{self.username},{points}\n")
         logger.info(f"{self.id} | Check all rewards.")
 
     @retry(stop=stop_after_attempt(12),
