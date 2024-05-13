@@ -2,7 +2,7 @@ import asyncio
 import random
 import uuid
 from typing import List, Optional
-
+import csv
 import aiohttp
 from fake_useragent import UserAgent
 from tenacity import stop_after_attempt, retry, retry_if_not_exception_type, wait_random, retry_if_exception_type
@@ -207,13 +207,25 @@ class Grass(GrassWs, GrassRest, FailureCounter):
 
         logger.info(f"{self.id} | Claimed all rewards.")
 
+    # async def check_point(self):
+    #     userId = await self.enter_account()
+    #     points = await self.get_points_handler()
+    #     logger.info(f"{self.id} | Total points: {points}")
+    #
+    #     with open(f"logs/accounts_point_{datetime.date.today().strftime('%Y-%m-%d')}.csv", "a", encoding="utf-8") as f:
+    #         f.write(f"{self.email}:{self.password}:{self.username},{userId},{points}\n")
+    #     logger.info(f"{self.id} | Check all rewards.")
+
     async def check_point(self):
-        await self.enter_account()
+        userId = await self.enter_account()
         points = await self.get_points_handler()
         logger.info(f"{self.id} | Total points: {points}")
 
-        with open(f"logs/accounts_point_{datetime.date.today().strftime('%Y-%m-%d')}.csv", "a", encoding="utf-8") as f:
-            f.write(f"{self.email}:{self.password}:{self.username},{points}\n")
+        file_path = f"logs/accounts_point_{datetime.date.today().strftime('%Y-%m-%d')}.csv"
+        with open(file_path, "a", newline='', encoding="utf-8") as file:
+            csv_writer = csv.writer(file)
+            csv_writer.writerow([self.email, self.password, self.username, userId, points])
+
         logger.info(f"{self.id} | Check all rewards.")
 
     @retry(stop=stop_after_attempt(12),

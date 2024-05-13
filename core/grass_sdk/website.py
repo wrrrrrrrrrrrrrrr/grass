@@ -1,7 +1,7 @@
 import asyncio
 import json
 import random
-
+import csv
 import aiohttp
 from tenacity import retry, stop_after_attempt, wait_random, retry_if_not_exception_type
 
@@ -59,8 +59,11 @@ class GrassRest(BaseClient):
 
         logger.info(f"{self.email} | Account created!")
 
-        with open("logs/new_accounts.txt", "a", encoding="utf-8") as f:
-            f.write(f"{self.email}:{self.password}:{self.username}\n")
+        # Write to CSV file
+        file_path = "logs/new_accounts.csv"  # Change the file extension to .csv
+        with open(file_path, "a", newline='', encoding="utf-8") as file:
+            csv_writer = csv.writer(file)
+            csv_writer.writerow([self.email, self.password, self.username])
 
         return await response.json()
 
