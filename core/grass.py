@@ -230,10 +230,10 @@ class Grass(GrassWs, GrassRest, FailureCounter):
     async def check_point(self):
         userId = await self.enter_account()
         points = await self.get_points_handler()
-        logger.info(f"{self.id} | Total points: {points}")
 
         data = await self.get_all_devices_info()
         ip_result = await self.check_ip_normal(data)
+        logger.info(f"{self.id} | Total points: {points} ip_result:{ip_result}")
 
         file_path = f"logs/accounts_point_{datetime.date.today().strftime('%Y-%m-%d')}.csv"
         with open(file_path, "a", newline='', encoding="utf-8") as file:
