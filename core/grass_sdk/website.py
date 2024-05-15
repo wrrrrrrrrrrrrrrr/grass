@@ -192,6 +192,13 @@ class GrassRest(BaseClient):
         response = await self.session.get(url, headers=self.website_headers, params=params, proxy=self.proxy)
         return await response.json()
 
+    async def get_all_devices_info(self):
+        url = 'https://api.getgrass.io/activeDevices'
+
+        response = await self.session.get(url, headers=self.website_headers, proxy=self.proxy)
+        return await response.json()
+
+
     async def get_devices_info(self):
         url = 'https://api.getgrass.io/extension/user-score'
 

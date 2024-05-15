@@ -216,15 +216,29 @@ class Grass(GrassWs, GrassRest, FailureCounter):
     #         f.write(f"{self.email}:{self.password}:{self.username},{userId},{points}\n")
     #     logger.info(f"{self.id} | Check all rewards.")
 
+    async def check_ip_normal(self, data):
+        results = []
+        for item in data['result']['data']:
+            status = "normal" if item['ipScore'] >= 75 else "error"
+            results.append({
+                'ipAddress': item['ipAddress'],
+                'ipScore': item['ipScore'],
+                'status': status
+            })
+        return results
+
     async def check_point(self):
         userId = await self.enter_account()
         points = await self.get_points_handler()
         logger.info(f"{self.id} | Total points: {points}")
 
+        data = await self.get_all_devices_info()
+        ip_result = await self.check_ip_normal(data)
+
         file_path = f"logs/accounts_point_{datetime.date.today().strftime('%Y-%m-%d')}.csv"
         with open(file_path, "a", newline='', encoding="utf-8") as file:
             csv_writer = csv.writer(file)
-            csv_writer.writerow([self.email, self.password, self.username, userId, points])
+            csv_writer.writerow([self.email, self.password, self.username, userId, points, ip_result])
 
         logger.info(f"{self.id} | Check all rewards.")
 
